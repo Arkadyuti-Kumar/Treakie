@@ -430,19 +430,21 @@ textarea.inp { resize:vertical; min-height:72px; }
 .overlay {
   display:none; position:fixed; inset:0;
   background:rgba(0,0,0,0.75); z-index:800;
-  align-items:flex-end; justify-content:center;
+  align-items:center; justify-content:center;
   backdrop-filter:blur(10px);
+  padding:20px;
 }
 .overlay.open { display:flex; animation:fadeIn .25s ease; }
 @keyframes fadeIn { from{opacity:0} to{opacity:1} }
 .sheet {
-  width:100%; max-width:740px; max-height:93vh;
+  width:min(96vw, 1440px); height:min(92vh, 1000px); max-height:92vh;
   background:var(--bg2); border-radius:24px 24px 0 0;
   border-top:1px solid var(--border);
   display:flex; flex-direction:column;
-  animation:slideSheet .32s cubic-bezier(0.34,1.26,0.64,1);
+  overflow:hidden;
+  animation:pdfReaderOpen .28s cubic-bezier(0.34,1.26,0.64,1);
 }
-@keyframes slideSheet { from{transform:translateY(100%)} to{transform:translateY(0)} }
+@keyframes pdfReaderOpen { from{opacity:0;transform:scale(.96) translateY(18px)} to{opacity:1;transform:scale(1) translateY(0)} }
 .sheet-header {
   display:flex; align-items:center; justify-content:space-between;
   padding:15px 20px; border-bottom:1px solid var(--border);
@@ -454,8 +456,13 @@ textarea.inp { resize:vertical; min-height:72px; }
   color:var(--text); font-size:14px;
   display:flex; align-items:center; justify-content:center;
 }
-.sheet-body { flex:1; overflow:hidden; padding:14px; }
-.sheet-body iframe { width:100%; height:100%; border:none; border-radius:10px; min-height:62vh; }
+.sheet-body { flex:1; min-height:0; overflow:hidden; padding:14px; }
+.sheet-body iframe { width:100%; height:100%; border:none; border-radius:12px; min-height:0; background:white; }
+
+@media (max-width:700px) {
+  .overlay { align-items:flex-end; padding:0; }
+  .sheet { width:100%; height:93vh; max-height:93vh; border-radius:24px 24px 0 0; }
+}
 
 /* ─────────────────────────────────────────────────────────────────
    AI AGENT CHAT
@@ -617,25 +624,18 @@ textarea.inp { resize:vertical; min-height:72px; }
 .clr-pick input[type=color] { width:160%; height:160%; margin:-30%; border:none; padding:0; }
 
 /* ─────────────────────────────────────────────────────────────────
-   CUSTOM CURSOR — 15px Glowing Circle
+   CUSTOM CURSOR — striped hand pointer
 ───────────────────────────────────────────────────────────────── */
-* { cursor: default; }
-button,a,.chip,.stat-card,.hist-header,.subj-header,.task-top,.pdf-card,.q-chip,.ai-fab,.bn,.nav-btn,.inner-tab,.sem-btn,.drop-zone,.gl-range,.task-chk { cursor: pointer; }
-#cursor-dot {
-  position:fixed; top:0; left:0; z-index:99999; pointer-events:none;
-  width:8px; height:8px; border-radius:50%;
-  background:var(--text); transform:translate(-50%,-50%);
-  transition: width .15s, height .15s, background .15s;
+/* Kept inline so the cursor works after deployment without a separate image file. */
+:root {
+  --brand-arrow-cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='25' height='31' viewBox='0 0 25 31'%3E%3Cpath d='M3 2 22 18l-9 1 5 9-6 2-5-9-4 7Z' fill='%236bc2f1' stroke='%23151516' stroke-width='2.5' stroke-linejoin='round'/%3E%3Cpath d='m4 3 16 14-7 1-7-6Z' fill='%23a875ee'/%3E%3Cpath d='m5 13 10 9' stroke='white' stroke-width='2'/%3E%3C/svg%3E") 3 2;
+  --brand-hand-cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='27' height='33' viewBox='0 0 36 44'%3E%3Cpath d='M18 2c3 0 5 2 5 5v12l2-2c2-2 6-1 7 2l1 2 1-1c2-2 5-1 6 1 1 2 0 4-1 6l-7 12c-2 4-6 6-10 6h-5c-5 0-8-3-10-7L1 25c-2-3-1-6 2-7 2-1 5 0 7 3l3 4V7c0-3 2-5 5-5Z' fill='%23a875ee' stroke='%23151516' stroke-width='3.5' stroke-linejoin='round'/%3E%3Cpath d='M5 23l9 13c1 2 3 3 5 3h5c3 0 5-1 6-4l6-11' fill='none' stroke='%236bc2f1' stroke-width='5'/%3E%3Cpath d='M10 34l17-16' stroke='white' stroke-width='2.5'/%3E%3C/svg%3E") 13 2;
 }
-#cursor-ring {
-  position:fixed; top:0; left:0; z-index:99998; pointer-events:none;
-  width:32px; height:32px; border-radius:50%;
-  border:1.5px solid var(--text); opacity:.45;
-  transform:translate(-50%,-50%);
-  transition: width .2s ease, height .2s ease, opacity .2s, border-color .2s;
+@media (pointer:fine) {
+  html, body { cursor:var(--brand-arrow-cursor), auto; }
+  button, a, .chip, .stat-card, .hist-header, .subj-header, .task-top, .pdf-card, .q-chip, .ai-fab, .bn, .nav-btn, .inner-tab, .sem-btn, .drop-zone, .gl-range, .task-chk { cursor:var(--brand-hand-cursor), pointer; }
+  input, select, textarea { cursor:auto; }
 }
-body.cursor-hover #cursor-dot { width:6px; height:6px; background:var(--blue); }
-body.cursor-hover #cursor-ring { width:44px; height:44px; border-color:var(--blue); opacity:.6; }
 
 /* ─────────────────────────────────────────────────────────────────
    LIQUID GLASS ANIMATIONS — stretch & bounce
@@ -743,10 +743,6 @@ body.cursor-hover #cursor-ring { width:44px; height:44px; border-color:var(--blu
 </style>
 </head>
 <body>
-
-<!-- Custom cursor -->
-<div id="cursor-dot"></div>
-<div id="cursor-ring"></div>
 
 <div class="app">
 
@@ -1048,23 +1044,6 @@ body.cursor-hover #cursor-ring { width:44px; height:44px; border-color:var(--blu
 <div class="toast" id="toast"></div>
 
 <script>
-/* ═════════════════════════════════════════════════════════
-   CUSTOM CURSOR
-═════════════════════════════════════════════════════════ */
-const dot  = document.getElementById('cursor-dot');
-const ring = document.getElementById('cursor-ring');
-let mx=0, my=0, rx=0, ry=0;
-document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; dot.style.left=mx+'px'; dot.style.top=my+'px'; });
-(function animRing() {
-  rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
-  ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
-  requestAnimationFrame(animRing);
-})();
-document.querySelectorAll('button,a,.chip,.stat-card,.hist-header,.subj-header,.task-top,.pdf-card,.q-chip,.ai-fab,.bn,.nav-btn,.inner-tab,.sem-btn,.drop-zone').forEach(el => {
-  el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
-  el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
-});
-
 /*DATA*/
 const KEY = 'dtV4';
 const PDF_KEY = 'dtV4_pdfs';
@@ -1778,16 +1757,6 @@ function toast(msg) {
   el.classList.add('show'); clearTimeout(toastTimer);
   toastTimer=setTimeout(()=>el.classList.remove('show'),2200);
 }
-/* ═════════════════════════════════════════════════════════
-   CURSOR HOVER ON DYNAMIC ELEMENTS
-═════════════════════════════════════════════════════════ */
-document.addEventListener('mouseover',function(e){
-  if(e.target.matches('button,a,.chip,.stat-card,.hist-header,.subj-header,.task-top,.pdf-card,.q-chip,.ai-fab,.bn,.nav-btn,.inner-tab,.sem-btn,.drop-zone,.gl-range,.task-chk,.hist-note-area,.ai-inp,.inp'))
-    document.body.classList.add('cursor-hover');
-  else document.body.classList.remove('cursor-hover');
-});
-
-
 /* ═════════════════════════════════════════════════════════
    24-HOUR RADIAL CHART
 ═════════════════════════════════════════════════════════ */
