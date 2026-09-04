@@ -7,7 +7,7 @@ The main goal of the website is to make it easier for students and individuals t
 ## 🌐 Live Website
 
 **Treakie:**
-https://stalwart-youtiao-011624.netlify.app/
+https://treakie.vercel.app/
 
 ## ✨ Features
 
