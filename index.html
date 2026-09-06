@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +9,7 @@
 :root { --tr: 0.32s cubic-bezier(0.4,0,0.2,1); }
 
 [data-theme="dark"] {
-  --bg:  #0D2818;  --bg2: #0D2818;  --bg3: #0B1F13;
+  --bg:  #000;  --bg2: #0c0c0c;  --bg3: #141414;
   --surface:  rgba(255,255,255,0.055);
   --surface2: rgba(255,255,255,0.09);
   --surface3: rgba(255,255,255,0.135);
@@ -31,7 +31,7 @@
   --teal:#14b8a6;--teal-s:rgba(20,184,166,0.14);
 }
 [data-theme="light"] {
-  --bg:  #9ACEB6; --bg2: #05A8AA; --bg3: #9ACEB6;
+  --bg:  #EDF7D2; --bg2: #EDF7CB; --bg3: #EDF7C4;
   --surface:  rgba(0,0,0,0.04);
   --surface2: rgba(0,0,0,0.07);
   --surface3: rgba(0,0,0,0.11);
@@ -740,6 +740,71 @@ textarea.inp { resize:vertical; min-height:72px; }
 .detox-alert.show { display:block; }
 .detox-title { font-size:15px; font-weight:800; color:var(--red); margin-bottom:6px; display:flex; align-items:center; gap:8px; }
 .detox-text { font-size:12.5px; color:var(--text2); line-height:1.6; }
+
+/* ─────────────────────────────────────────────────────────────────
+   BALANCE DASHBOARD REDESIGN
+───────────────────────────────────────────────────────────────── */
+[data-theme="light"] {
+  --bg:#dff3ee; --bg2:#f8fcfb; --bg3:#eff8f5;
+  --surface:rgba(255,255,255,.66); --surface2:rgba(225,244,237,.85); --surface3:#dceee8;
+  --border:rgba(22,70,58,.10); --border2:rgba(22,70,58,.2);
+  --text:#15232b; --text2:#607389; --text3:#92a1b0;
+  --accent:#142a32; --inv:#fff; --glass-bg:rgba(255,255,255,.88);
+  --glass-bdr:rgba(255,255,255,.9); --glass-shd:0 16px 44px rgba(39,83,74,.10);
+  --nav-bg:rgba(247,253,251,.86); --nav-bdr:rgba(22,70,58,.10);
+  --blue:#31a9e9; --blue-s:#e7f7ff; --green:#11aa78; --green-s:#e4fbf1;
+  --orange:#e87f24; --orange-s:#fff4e8; --red:#e45b56; --red-s:#fff0ef;
+  --yellow:#d89a12; --yellow-s:#fff8df; --purple:#ad70eb; --purple-s:#f7efff;
+  --teal:#14b89b; --teal-s:#e3fbf6;
+}
+body { background:radial-gradient(circle at 6% 4%, #cceff0 0, transparent 26%), radial-gradient(circle at 88% 11%, #fff3c9 0, transparent 28%), var(--bg); }
+.app { max-width:1240px; padding:22px 22px 80px; }
+.header { min-height:92px; padding:18px 30px; margin-bottom:20px; border-radius:28px; }
+.hd-left { display:grid; grid-template-columns:48px auto; column-gap:14px; align-items:center; }
+.brand-mark { grid-row:1 / span 2; width:48px; height:48px; display:grid; place-items:center; border-radius:15px; background:linear-gradient(135deg,#63dfb4,#35c892); color:#fff; font-size:27px; box-shadow:inset 0 1px 0 rgba(255,255,255,.5); }
+.hd-left h1 { font-size:24px; letter-spacing:-1px; }
+.hd-left h1 small { margin-left:8px; padding:4px 9px; border-radius:20px; background:#d9f8e8; color:#157a58; font-size:11px; letter-spacing:0; vertical-align:middle; }
+.hd-left p { font-size:13.5px; margin:0; }
+.hd-right { gap:11px; }
+.date-chip { padding:10px 15px; color:var(--text); background:#f2faf7; border-radius:18px; }
+.weather-chip { display:flex; align-items:center; gap:7px; padding:10px 14px; border:1px solid #ffe0a1; border-radius:18px; background:#fffaf0; color:#a85813; font-size:12px; font-weight:700; }
+.icon-btn { width:40px; height:40px; border-radius:14px; background:#dff4ec; color:#126b55; }
+.top-nav { display:flex; align-items:center; justify-content:space-between; gap:18px; margin-bottom:28px; }
+.nav { width:max-content; max-width:100%; margin:0; padding:6px; border-radius:18px; }
+.nav-btn { flex:initial; min-width:72px; padding:10px 15px; font-size:13px; font-weight:650; }
+.nav-btn.active { background:#1c2c35; color:#fff; box-shadow:0 4px 10px rgba(18,39,47,.18); transform:none; }
+.quick-checkin { border:0; border-radius:17px; padding:11px 19px; background:#07966f; color:white; font:700 13px inherit; box-shadow:0 8px 16px rgba(7,150,111,.22); }
+.quick-checkin:hover { background:#078460; transform:translateY(-1px); }
+.glass { border-radius:26px; box-shadow:var(--glass-shd); }
+.card { padding:27px 29px; margin-bottom:18px; }
+.card-title { font-size:18px; margin-bottom:20px; }
+.card-title-icon { display:grid; place-items:center; width:36px; height:36px; border-radius:12px; font-size:17px; background:#fff4e7; }
+.score-row { min-height:168px; padding:28px 32px; border-radius:28px; }
+.score-circle { width:102px; height:102px; border-width:7px; border-top-color:var(--blue); border-right-color:var(--teal); }
+.score-num { font-size:29px; }.score-den { font-size:11px; }
+.s-title { font-size:25px; }.s-sub { font-size:14px; max-width:430px; line-height:1.6; }
+.score-meta::before { content:'✦ Great balance today'; display:inline-block; margin-bottom:9px; padding:5px 10px; border:1px solid #a5e8cd; border-radius:20px; color:#13825d; background:#edfff5; font-size:11px; font-weight:700; }
+.radial-24h { width:290px; height:290px; margin:14px auto 16px; }
+.rings-row { padding:22px; border-radius:26px; }.ring-wrap span { font-size:12px; }.ring { width:76px; height:76px; }
+.stat-grid { gap:12px; }.stat-card { padding:16px; border-radius:18px; background:rgba(255,255,255,.72); border:1px solid var(--border); }.stat-card:hover { transform:translateY(-3px); background:white; }
+.bot-nav { display:none; }
+
+@media (min-width:900px) {
+  #tab-overview { display:none; grid-template-columns:minmax(0,1.6fr) minmax(310px,.78fr); gap:22px; align-items:start; }
+  #tab-overview.active { display:grid; }
+  #tab-overview .score-row { grid-column:1; margin:0 !important; }
+  #tab-overview .detox-alert { grid-column:1; margin:0; }
+  #tab-overview > .card { grid-column:1; margin:0; min-height:430px; }
+  #tab-overview .rings-row { grid-column:2; grid-row:1; margin:0 !important; display:grid; grid-template-columns:1fr 1fr; gap:16px; min-height:168px; align-content:center; }
+  #tab-overview .stat-grid { grid-column:2; grid-row:2 / span 2; grid-template-columns:1fr 1fr; padding:24px; border-radius:26px; background:var(--glass-bg); border:1px solid var(--glass-bdr); box-shadow:var(--glass-shd); }
+  #tab-overview .stat-card { min-height:116px; }
+}
+@media (max-width:899px) {
+  .app { max-width:740px; padding:16px 14px 96px; }.header { padding:16px 18px; min-height:auto; }.weather-chip { display:none; }
+  .top-nav { margin-bottom:14px; }.nav { overflow:auto; width:100%; }.nav-btn { min-width:67px; padding:9px 10px; }.quick-checkin { display:none; }
+  .bot-nav { display:flex; }.score-row { padding:20px; }.s-title { font-size:20px; }.card { padding:20px; }
+}
+@media (max-width:520px) { .hd-left { grid-template-columns:40px auto; column-gap:10px; }.brand-mark { width:40px; height:40px; border-radius:13px; font-size:22px; }.hd-left h1 { font-size:20px; }.hd-left p { font-size:11px; }.date-chip { display:none; }.header { border-radius:22px; }.icon-btn { width:36px; height:36px; }.nav { border-radius:15px; }.nav-btn { min-width:62px; font-size:11px; }.radial-24h { width:255px; height:255px; } }
 </style>
 </head>
 <body>
@@ -749,23 +814,28 @@ textarea.inp { resize:vertical; min-height:72px; }
   <!-- HEADER -->
   <div class="glass header">
     <div class="hd-left">
-      <h1>Treakie</h1>
+      <div class="brand-mark" aria-hidden="true">⌁</div>
+      <h1>Treakie <small>v2.4</small></h1>
       <p id="greeting">—</p>
     </div>
     <div class="hd-right">
       <div class="date-chip" id="todayDate">—</div>
+      <div class="weather-chip" aria-label="Daily focus"><span>☀️</span> Daily focus</div>
       <button class="icon-btn" onclick="toggleTheme()" id="themeBtn" title="Toggle theme">🌙</button>
     </div>
   </div>
 
   <!-- NAV -->
-  <div class="glass nav">
-    <button class="nav-btn active" onclick="switchTab('overview')">Home</button>
-    <button class="nav-btn" onclick="switchTab('log')">Log</button>
-    <button class="nav-btn" onclick="switchTab('homework')">Tasks</button>
-    <button class="nav-btn" onclick="switchTab('library')">Library</button>
-    <button class="nav-btn" onclick="switchTab('history')">History</button>
-    <button class="nav-btn" onclick="switchTab('tips')">Tips</button>
+  <div class="top-nav">
+    <div class="glass nav">
+      <button class="nav-btn active" onclick="switchTab('overview')">Home</button>
+      <button class="nav-btn" onclick="switchTab('log')">Log</button>
+      <button class="nav-btn" onclick="switchTab('homework')">Tasks</button>
+      <button class="nav-btn" onclick="switchTab('library')">Library</button>
+      <button class="nav-btn" onclick="switchTab('history')">History</button>
+      <button class="nav-btn" onclick="switchTab('tips')">Tips</button>
+    </div>
+    <button class="quick-checkin" onclick="switchTab('log')">＋ Quick Check-in</button>
   </div>
 
   <!-- ══ OVERVIEW ══ -->
@@ -1059,7 +1129,7 @@ function save() { localStorage.setItem(KEY, JSON.stringify(DB)); }
 /* ═════════════════════════════════════════════════════════
    THEME
 ═════════════════════════════════════════════════════════ */
-let isDark = localStorage.getItem('theme') !== 'light';
+let isDark = localStorage.getItem('theme') === 'dark';
 function applyTheme() {
   document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
   document.getElementById('themeBtn').textContent = isDark ? '🌙' : '☀️';
@@ -1079,7 +1149,7 @@ function init() {
 
 function setHeader() {
   const d = new Date();
-  document.getElementById('todayDate').textContent = d.toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});
+  document.getElementById('todayDate').textContent = d.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'short',year:'numeric'});
   const h = d.getHours();
   document.getElementById('greeting').textContent =
     (h<12?'Good morning':h<17?'Good afternoon':'Good evening') + ' — track your day!';
